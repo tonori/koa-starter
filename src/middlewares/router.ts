@@ -6,13 +6,14 @@ import type Koa from 'koa';
 export default function initRoutes(app: Koa) {
   const router = new SwaggerRouter();
 
-  router.swagger({
-    title: env.SWAGGER_TITLE ?? 'Koa API',
-    description: env.SWAGGER_DESCRIPTION ?? 'Koa API Documentation',
-    version: env.SWAGGER_DOC_VERSION ?? '1.0.0',
-    swaggerHtmlEndpoint: `/documentation`,
-    swaggerJsonEndpoint: '/documentation/swagger-json',
-  });
+  if (env.NODE_ENV === 'development') {
+    router.swagger({
+      title: env.SWAGGER_TITLE ?? 'Koa API',
+      description: env.SWAGGER_DESCRIPTION ?? 'Koa API Documentation',
+      version: env.SWAGGER_DOC_VERSION ?? '1.0.0',
+      swaggerHtmlEndpoint: env.SWAGGER_DOC_URL,
+    });
+  }
 
   router.mapDir(resolve(__dirname, '../controller'), {
     doValidation: false,

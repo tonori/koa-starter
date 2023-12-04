@@ -5,7 +5,6 @@ import {
   request,
   responses,
   summary,
-  tags,
 } from 'koa-swagger-decorator';
 import query from '@/decorator/query';
 import validate from '@/decorator/validate';
@@ -16,7 +15,6 @@ import AppDataSource from '@/config/dataSource';
 
 @controller('Test')
 export default class Index {
-  @tags(['Test'])
   @request('GET', '/')
   @summary('Greetings from Koa~')
   @responses({
