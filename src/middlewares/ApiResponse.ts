@@ -3,7 +3,7 @@ import type HttpStatusCodes from 'http-status-codes';
 import { StatusCodes } from 'http-status-codes';
 import { type ValidateError } from 'async-validator/dist-types/interface';
 
-type Phrase = Exclude<
+export type Phrase = Exclude<
   keyof typeof HttpStatusCodes,
   'getStatusCode' | 'getStatusText'
 >;
@@ -17,9 +17,9 @@ export interface Error {
 
 export default function ApiResponse(app: Koa) {
   app.use(async (ctx, next) => {
-    ctx.success = (data?: any, statusCode?: number) => {
+    ctx.success = (data?: any, phrase?: Phrase) => {
       ctx.response.type = 'application/json';
-      ctx.response.status = statusCode ?? 200;
+      ctx.response.status = StatusCodes[phrase ?? 'OK'];
       ctx.response.body = JSON.stringify(data);
     };
 

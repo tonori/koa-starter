@@ -110,7 +110,7 @@ export default class Index {
       {
         success: true,
       },
-      201
+      'CREATED'
     );
   }
 }
